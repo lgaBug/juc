@@ -1,15 +1,14 @@
 package com.lga.juc;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Hello world!
- *
  */
-public class App
+public class App {
+    public static void main(String[] args) throws InterruptedException {
 
-
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+        TimeUnit.SECONDS.sleep(20);
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 }
