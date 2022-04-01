@@ -1,5 +1,6 @@
 package com.lga.juc.pc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -51,27 +52,30 @@ class Data1 {
     private int count = 0;
 
     public void increament() throws InterruptedException {
+        lock.lock();
         try {
-            lock.lock();
             while (count != 0) {
                 notZero.await();
             }
             count++;
             System.out.println(Thread.currentThread().getName() + " --- count:" + count);
+            TimeUnit.SECONDS.sleep(5);
             notOne.signalAll();
+
         } finally {
             lock.unlock();
         }
     }
 
     public void decreament() throws InterruptedException {
+        lock.lock();
         try {
-            lock.lock();
             while (count == 0) {
                 notOne.await();
             }
             count--;
             System.out.println(Thread.currentThread().getName() + " --- count:" + count);
+//            TimeUnit.SECONDS.sleep(2);
             notZero.signalAll();
         } finally {
             lock.unlock();
